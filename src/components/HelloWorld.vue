@@ -7,11 +7,14 @@
   <Composition></Composition>
   <!-- Teleport: ModalButton -->
   <ModalButton></ModalButton>
+  <!-- Emits选项 -->
+  <Emits @my-click="onClick"></Emits>
 </template>
 
 <script>
 import ModalButton from './ModalButton.vue'
 import Composition from './Composition.vue'
+import Emits from './Emits.vue'
 
 export default {
   name: "HelloWorld",
@@ -20,12 +23,13 @@ export default {
   },
   components: {
     ModalButton,
-    Composition
+    Composition,
+    Emits
   },
-  setup() {
-
-    return {
-    };
+  methods: {
+    onClick() {
+      console.log('click me!')
+    }
   },
 };
 </script>
