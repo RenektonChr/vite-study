@@ -9,6 +9,11 @@ createApp(App)
     return h('div', 'I am a comp!')
   }
 })
+.directive('highlight', {
+  beforeMount(el, binding, vnode) {
+    el.style.background = binding.value
+  }
+})
 .mount('#app')
 
 // 自定义渲染器
@@ -36,7 +41,7 @@ const nodeOps = {
         canvas.addEventListener('click', () => {
           child.onClick()
           setTimeout(() => {
-            draw(child)
+            // draw(child)
           }, 0)
         })
       }

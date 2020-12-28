@@ -20,17 +20,35 @@
     <template v-slot:content>content...</template>
   </RenderTest>
 
-  <!-- 函数是组件 -->
+  <!-- 函数式组件 -->
   <Functional level="3">这是一个动态的H元素</Functional>
+
+  <!-- 异步组件 -->
+  <AsyncComp></AsyncComp>
+
+  <!-- 自定义指令 -->
+  <p v-highlight="'green'">highlight this text!!!</p>
+
+  <!-- 动画 -->
+  <TransitionTest></TransitionTest>
+
+  <!-- 发送和监听事件 -->
+  <button @click="sendMsg">emit event</button>
 </template>
 
 <script>
-import { h } from 'vue'
+import { h, defineAsyncComponent } from 'vue'
 import ModalButton from './ModalButton.vue'
 import Composition from './Composition.vue'
 import Emits from './Emits.vue'
 import VmodelTest from './VmodelTest.vue'
 import Functional from './Functional.vue'
+import TransitionTest from './TransitionTest.vue'
+
+// 事件的派发和监听
+import mitt from 'mitt'
+
+export const emitter = mitt()
 
 export default {
   name: "HelloWorld",
@@ -71,11 +89,16 @@ export default {
         }
       }
     },
-    Functional
+    Functional,
+    AsyncComp: defineAsyncComponent(() => import('./nextPage.vue')),
+    TransitionTest
   },
   methods: {
     onClick() {
       console.log('click me!')
+    },
+    sendMsg() {
+      emitter.emit('someEvent', 'fooooooo')
     }
   },
 };
