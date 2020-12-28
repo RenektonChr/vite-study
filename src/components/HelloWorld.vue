@@ -19,6 +19,9 @@
     <template v-slot:default>title</template>
     <template v-slot:content>content...</template>
   </RenderTest>
+
+  <!-- 函数是组件 -->
+  <Functional level="3">这是一个动态的H元素</Functional>
 </template>
 
 <script>
@@ -27,6 +30,7 @@ import ModalButton from './ModalButton.vue'
 import Composition from './Composition.vue'
 import Emits from './Emits.vue'
 import VmodelTest from './VmodelTest.vue'
+import Functional from './Functional.vue'
 
 export default {
   name: "HelloWorld",
@@ -66,7 +70,8 @@ export default {
           this.$emit('update:counter', this.counter + 1)
         }
       }
-    }
+    },
+    Functional
   },
   methods: {
     onClick() {
