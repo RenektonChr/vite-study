@@ -2,6 +2,7 @@ import { createApp, createRenderer, h } from 'vue'
 import App from './App.vue'
 import './index.css'
 import CanvasApp from './CanvasApp.vue'
+import EditTodo from './components/todos/EditTodo.vue'
 
 createApp(App)
 .component('comp', {
@@ -9,6 +10,7 @@ createApp(App)
     return h('div', 'I am a comp!')
   }
 })
+.component('EditTodo', EditTodo)
 .directive('highlight', {
   beforeMount(el, binding, vnode) {
     el.style.background = binding.value
