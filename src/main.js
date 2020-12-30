@@ -3,14 +3,61 @@ import App from './App.vue'
 import './index.css'
 import CanvasApp from './CanvasApp.vue'
 import EditTodo from './components/todos/EditTodo.vue'
+import Todos from './components/todos/Todos.vue'
+import Dashboard from './components/Dashboard.vue'
+import NavLink from './components/NavLink.vue'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+
+// 实例的创建方式发生了变化
+const router = createRouter({
+  history: createWebHistory('/base-directory'),
+  routes: [
+    {
+      path: '/',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/todos',
+      name: 'todos',
+      component: Todos
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('./components/NotFound.vue')
+    }
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }else {
+      return { top: 0 }
+    }
+  }
+})
+
+// 特性：动态路由的添加
+router.addRoute({
+  path: '/about',
+  name: 'about',
+  component: () =>  import('./components/About.vue')
+})
+router.addRoute('about', {
+  path: '/about/info',
+  name: 'info',
+  component: () =>  import('./components/AboutInfo.vue')
+})
 
 createApp(App)
+.use(router)
 .component('comp', {
   render() {
     return h('div', 'I am a comp!')
   }
 })
 .component('EditTodo', EditTodo)
+.component('NavLink', NavLink)
 .directive('highlight', {
   beforeMount(el, binding, vnode) {
     el.style.background = binding.value

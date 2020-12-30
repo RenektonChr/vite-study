@@ -1,6 +1,7 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <Todos />
+  <img alt="Vue logo" src="./assets/logo.png" height="1000" />
+  <!-- <Todos /> -->
+  <router-view></router-view>
 </template>
 
 <script>

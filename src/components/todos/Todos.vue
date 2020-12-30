@@ -20,11 +20,15 @@
     </ul>
     <!-- 过滤 -->
     <Filter :items="filterItems" v-model="visibility"></Filter>
+
+    <!-- 回退到首页 -->
+    <button @click="backToDash">dashboard</button>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
+import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
 import TodoItem from './todoItem.vue'
 import Filter from './Filter.vue'
 import { useTodos } from './useTodos'
@@ -42,12 +46,32 @@ export default {
     })
     const { todos, addTodo, removeTodo } = useTodos(todoState)
     const filterState = useFilter(todos)
+    const router = useRouter()
+
+    // route是响应式对象，可监控其变化并做相应
+    const route = useRoute()
+    watch(() => route.query, (query) => {
+      console.log('query--->', query)
+    })
+
+    function backToDash() {
+      router.push('/')
+    }
+
+    // 路由守卫
+    onBeforeRouteLeave((to, form) => {
+      const answer = window.confirm('你确定要离开吗？')
+      if(!answer) {
+        return false
+      }
+    })
 
     return {
       ...toRefs(todoState),
       ...toRefs(filterState),
       addTodo,
-      removeTodo
+      removeTodo,
+      backToDash
     }
   }
 }
