@@ -7,6 +7,7 @@ import Todos from './components/todos/Todos.vue'
 import Dashboard from './components/Dashboard.vue'
 import NavLink from './components/NavLink.vue'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import { createStore } from 'vuex'
 
 // 实例的创建方式发生了变化
 const router = createRouter({
@@ -49,8 +50,22 @@ router.addRoute('about', {
   component: () =>  import('./components/AboutInfo.vue')
 })
 
+const store = createStore({
+  state() {
+    return {
+      count: 0
+    }
+  },
+  mutations: {
+    add(state) {
+      state.count++;
+    }
+  }
+})
+
 createApp(App)
 .use(router)
+.use(store)
 .component('comp', {
   render() {
     return h('div', 'I am a comp!')
